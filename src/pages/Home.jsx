@@ -343,6 +343,48 @@ function Home() {
         </div>
       </section>
 
+{/* SECCIÓN 7: Publicaciones Especiales */}
+      <section id="publicaciones-especiales" className="relative py-20 z-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={staggerContainer}
+            className="grid md:grid-cols-2 gap-16 items-center"
+          >
+            <motion.div variants={fadeInLeft} className="order-2 md:order-1">
+              <div className="relative overflow-hidden rounded-lg border border-gray-300 shadow-lg">
+                <img 
+                  src="/PublicacionesEspeciales01.png" 
+                  alt="Publicaciones Especiales"
+                  className="w-full h-full object-cover aspect-[4/3] hover:scale-105 transition-transform duration-500"
+                />
+              </div>
+            </motion.div>
+
+            <motion.div variants={fadeInRight} className="order-1 md:order-2">
+              <h2 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
+                Publicaciones <span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-pink-600">Especiales</span>
+              </h2>
+              <p className="text-xl text-gray-600 mb-8 leading-relaxed">
+                Espacio dedicado a la difusión de eventos y actividades académicas de especial relevancia para la Facultad.
+              </p>
+              <Link 
+                to="/publicaciones-especiales"
+                className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full text-white font-semibold hover:scale-105 transition-transform shadow-lg shadow-purple-500/50"
+              >
+                Ver Publicaciones Especiales
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                </svg>
+              </Link>
+            </motion.div>
+          </motion.div>
+        </div>
+      </section>
+        
+        
       {/* Botón para volver arriba - Flotante */}
       <motion.div
         initial={{ opacity: 0 }}
