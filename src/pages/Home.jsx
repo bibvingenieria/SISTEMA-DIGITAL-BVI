@@ -356,7 +356,7 @@ function Home() {
             <motion.div variants={fadeInLeft} className="order-2 md:order-1">
               <div className="relative overflow-hidden rounded-lg border border-gray-300 shadow-lg">
                 <img 
-                  src="/PublicacionesEspeciales01.png" 
+                  src="/PublicacionesEspeciales01.jpg" 
                   alt="Publicaciones Especiales"
                   className="w-full h-full object-cover aspect-[4/3] hover:scale-105 transition-transform duration-500"
                 />
