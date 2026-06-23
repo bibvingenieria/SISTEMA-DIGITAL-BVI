@@ -16,6 +16,7 @@ function Admin() {
   const [boletinesAnualesList, setBoletinesAnualesList] = useState([])
   const [fotogaleriaAnualesList, setFotogaleriaAnualesList] = useState([])
   const [fotogaleriaSemestralesList, setFotogaleriaSemestralesList] = useState([])
+  const [publicacionesEspecialesList, setPublicacionesEspecialesList] = useState([])
 
   const handleLogout = async () => {
     await supabase.auth.signOut()
@@ -66,6 +67,14 @@ function Admin() {
     semestre: 1
   })
 
+  const [publicacionEspecial, setPublicacionEspecial] = useState({
+    titulo: '',
+    descripcion: '',
+    pdf_url: '',
+    imagen_url: '',
+    año: new Date().getFullYear()
+  })
+
   // Cargar datos al cambiar de tab
   useEffect(() => {
     loadData()
@@ -111,6 +120,13 @@ function Admin() {
           .order('semestre', { ascending: false })
         if (error) throw error
         setFotogaleriaSemestralesList(data || [])
+      } else if (activeTab === 'publicaciones-especiales') {
+        const { data, error } = await supabase
+          .from('publicaciones_especiales')
+          .select('*')
+          .order('año', { ascending: false })
+        if (error) throw error
+        setPublicacionesEspecialesList(data || [])
       }
     } catch (error) {
       console.error('Error loading data:', error)
@@ -401,6 +417,64 @@ function Admin() {
 
   const handleEditFotoSemestral = (item) => {
     setFotoSemestral(item)
+    setEditingId(item.id)
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
+
+  // Función para agregar/eliminar/editar publicación especial
+  const handleAddPublicacionEspecial = async (e) => {
+    e.preventDefault()
+    setLoading(true)
+    try {
+      if (editingId) {
+        const { id, created_at, ...updateData } = publicacionEspecial
+        const { error } = await supabase
+          .from('publicaciones_especiales')
+          .update(updateData)
+          .eq('id', publicacionEspecial.id)
+        if (error) throw error
+        setMessage('✅ Publicación Especial actualizada exitosamente')
+        setEditingId(null)
+      } else {
+        const { error } = await supabase
+          .from('publicaciones_especiales')
+          .insert([publicacionEspecial])
+        if (error) throw error
+        setMessage('✅ Publicación Especial agregada exitosamente')
+      }
+      
+      setPublicacionEspecial({
+        titulo: '',
+        descripcion: '',
+        pdf_url: '',
+        imagen_url: '',
+        año: new Date().getFullYear()
+      })
+      loadData()
+    } catch (error) {
+      setMessage('❌ Error: ' + error.message)
+    }
+    setLoading(false)
+  }
+
+  const handleDeletePublicacionEspecial = async (id) => {
+    if (!confirm('¿Estás seguro de eliminar esta publicación especial?')) return
+    try {
+      const { error } = await supabase
+        .from('publicaciones_especiales')
+        .delete()
+        .eq('id', id)
+      if (error) throw error
+      setMessage('✅ Publicación Especial eliminada exitosamente')
+      loadData()
+    } catch (error) {
+      setMessage('❌ Error: ' + error.message)
+    }
+  }
+
+  const handleEditPublicacionEspecial = (item) => {
+    setPublicacionEspecial(item)
     setEditingId(item.id)
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
