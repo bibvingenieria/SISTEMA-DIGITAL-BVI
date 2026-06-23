@@ -1356,6 +1356,150 @@ function Admin() {
             </div>
             </>
           )}
+
+
+{/* Formulario: Publicaciones Especiales */}
+          {activeTab === 'publicaciones-especiales' && (
+            <>
+            <div className="bg-white rounded-xl shadow-lg p-8 mb-8">
+              <h2 className="text-2xl font-bold text-gray-900 mb-6">
+                {editingId ? 'Editar Publicación Especial' : 'Agregar Publicación Especial'}
+              </h2>
+              <form onSubmit={handleAddPublicacionEspecial} className="space-y-6">
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Título</label>
+                    <input
+                      type="text"
+                      required
+                      value={publicacionEspecial.titulo}
+                      onChange={(e) => setPubilcacionEspecial({...publicacionEspecial, titulo: e.target.value})}
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+                      placeholder="Ej: Publicación Especial 2025"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">URL de la Publicación Especial</label>
+                    <input
+                      type="url"
+                      required
+                      value={publicacionEspecial.pdf_url}
+                      onChange={(e) => setPublicacionEspecial({...publicacionEspecial, pdf_url: e.target.value})}
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+                      placeholder="https://ejemplo.com/"
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">URL de Imagen</label>
+                  <input
+                    type="url"
+                    required
+                    value={publicacionEspecial.imagen_url}
+                    onChange={(e) => setPublicacionEspecial({...publicacionEspecial, imagen_url: e.target.value})}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+                    placeholder="https://ejemplo.com/imagen.jpg"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Descripción</label>
+                  <textarea
+                    value={publicacionEspecial.descripcion}
+                    onChange={(e) => setPublicacionEspecial({...publicacionEspecial, descripcion: e.target.value})}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+                    rows="3"
+                    placeholder="Descripción breve de la publicación especial..."
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Año</label>
+                  <input
+                    type="number"
+                    required
+                    value={publicacionEspecial.año}
+                    onChange={(e) => setPublicacionEspecial({...publicacionEspecial, año: parseInt(e.target.value)})}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+                    min="2004"
+                    max="2099"
+                  />
+                </div>
+                <div className="flex gap-4">
+                  <button
+                    type="submit"
+                    disabled={loading}
+                    className="flex-1 bg-gradient-to-r from-orange-600 to-amber-600 text-white font-semibold py-3 px-6 rounded-lg hover:shadow-lg transform hover:scale-105 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    {loading ? (editingId ? 'Actualizando...' : 'Agregando...') : (editingId ? 'Actualizar Publicación Especial' : 'Agregar Publicación Especial')}
+                  </button>
+                  {editingId && (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setEditingId(null)
+                        setPublicacionEspecial({
+                          titulo: '',
+                          descripcion: '',
+                          pdf_url: '',
+                          imagen_url: '',
+                          año: new Date().getFullYear()
+                        })
+                      }}
+                      className="px-6 py-3 bg-gray-500 text-white font-semibold rounded-lg hover:bg-gray-600 transition-colors"
+                    >
+                      Cancelar
+                    </button>
+                  )}
+                </div>
+              </form>
+            </div>
+
+            {/* Lista de Publicaciones Especiales */}
+            <div className="bg-white rounded-xl shadow-lg p-8">
+              <h2 className="text-2xl font-bold text-gray-900 mb-6">Publicaciones Especiales Registradas</h2>
+              <div className="space-y-4">
+                {publicacionesEspecialesList.length === 0 ? (
+                  <p className="text-gray-500 text-center py-8">No hay publicaciones especiales registradas</p>
+                ) : (
+                  publicacionesEspecialesList.map((item) => (
+                    <div key={item.id} className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
+                      <div className="flex items-start justify-between">
+                        <div className="flex-1">
+                          <h3 className="font-bold text-lg text-gray-900">{item.titulo}</h3>
+                          <p className="text-gray-600 text-sm mt-1">{item.descripcion}</p>
+                          <div className="flex gap-4 mt-2 text-sm text-gray-500">
+                            <span>Año: {item.año}</span>
+                          </div>
+                        </div>
+                        <div className="flex gap-2 ml-4">
+                          <button
+                            onClick={() => handleEditPublicacionEspecial(item)}
+                            className="p-2 bg-blue-100 text-blue-600 rounded-lg hover:bg-blue-200 transition-colors"
+                            title="Editar"
+                          >
+                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                            </svg>
+                          </button>
+                          <button
+                            onClick={() => handleDeletePublicacionEspecial(item.id)}
+                            className="p-2 bg-red-100 text-red-600 rounded-lg hover:bg-red-200 transition-colors"
+                            title="Eliminar"
+                          >
+                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                            </svg>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  ))
+                )}
+              </div>
+            </div>
+            </>
+          )}
+
+
         </motion.div>
       </div>
     </div>
