@@ -7,7 +7,7 @@ function PublicacionesEspeciales() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    fetchBoletines()
+    fetchPublicaciones()
   }, [])
 
   const fetchPublicaciones = async () => {
@@ -78,7 +78,7 @@ function PublicacionesEspeciales() {
                 <div className="p-6">
                   <h3 className="text-2xl font-bold text-gray-800 mb-2">{publicacion.titulo}</h3>
                   {publicacion.descripcion && (
-                    <p className="text-gray-600 text-sm line-clamp-2">{boletin.descripcion}</p>
+                    <p className="text-gray-600 text-sm line-clamp-2">{publicacion.descripcion}</p>
                   )}
                 </div>
               </a>
