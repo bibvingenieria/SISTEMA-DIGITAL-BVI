@@ -7,6 +7,7 @@ import InformativosMensualesYear from './pages/InformativosMensualesYear'
 import FotogaleriaAnuales from './pages/FotogaleriaAnuales'
 import FotogaleriaSemestrales from './pages/FotogaleriaSemestrales'
 import BoletinesAnuales from './pages/BoletinesAnuales'
+import PublicacionesEspeciales from './pages/PublicacionesEspeciales'
 import Admin from './pages/Admin'
 import Login from './pages/Login'
 import ProtectedRoute from './components/ProtectedRoute'
@@ -23,6 +24,7 @@ function App() {
         <Route path="/fotogaleria-anuales" element={<FotogaleriaAnuales />} />
         <Route path="/fotogaleria-semestrales" element={<FotogaleriaSemestrales />} />
         <Route path="/boletines-anuales" element={<BoletinesAnuales />} />
+        <Route path="/publicaciones-especiales" element={<PublicacionesEspeciales />} />
         <Route path="/login" element={<Login />} />
         <Route path="/admin" element={
           <ProtectedRoute>
