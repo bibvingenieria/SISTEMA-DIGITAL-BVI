@@ -51,7 +51,7 @@ function PublicacionesEspeciales() {
           <div className="flex justify-center items-center py-20">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-600"></div>
           </div>
-        ) : boletines.length === 0 ? (
+        ) : publicaciones.length === 0 ? (
           <div className="text-center py-20">
             <p className="text-gray-600 text-lg">No hay publicaciones especiales disponibles aún.</p>
           </div>
