@@ -2,26 +2,26 @@ import { Link } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import { supabase } from '@/lib/supabase'
 
-function BoletinesAnuales() {
-  const [boletines, setBoletines] = useState([])
+function PublicacionesEspeciales() {
+  const [publcaciones, setPublicaciones] = useState([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     fetchBoletines()
   }, [])
 
-  const fetchBoletines = async () => {
+  const fetchPublicaciones = async () => {
     try {
       const { data, error } = await supabase
-        .from('boletines_anuales')
+        .from('publicaciones_especiales')
         .select('*')
         .order('año', { ascending: false })
       
       if (error) throw error
       
-      setBoletines(data || [])
+      setPublicaciones(data || [])
     } catch (error) {
-      console.error('Error fetching boletines anuales:', error)
+      console.error('Error fetching publicaciones especiales:', error)
     } finally {
       setLoading(false)
     }
@@ -39,9 +39,9 @@ function BoletinesAnuales() {
             Volver al inicio
           </Link>
           <h1 className="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-orange-600 to-amber-600">
-            Boletines Anuales
+            Publicaciones Especiales
           </h1>
-          <p className="text-gray-600 mt-2 text-lg">Consulta los boletines anuales por año</p>
+          <p className="text-gray-600 mt-2 text-lg">Consulta nuestras Publicaciones Especiales</p>
         </div>
       </header>
 
@@ -53,31 +53,31 @@ function BoletinesAnuales() {
           </div>
         ) : boletines.length === 0 ? (
           <div className="text-center py-20">
-            <p className="text-gray-600 text-lg">No hay boletines anuales disponibles aún.</p>
+            <p className="text-gray-600 text-lg">No hay publicaciones especiales disponibles aún.</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {boletines.map((boletin) => (
+            {publicaciones.map((publicacion) => (
               <a
-                key={boletin.id}
-                href={boletin.pdf_url}
+                key={publicacion.id}
+                href={publicacion.pdf_url}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border-t-4 border-orange-500 overflow-hidden"
               >
                 <div className="relative h-64 overflow-hidden">
                   <img 
-                    src={boletin.imagen_url} 
-                    alt={boletin.titulo}
+                    src={publicacion.imagen_url} 
+                    alt={publicacion.titulo}
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                   />
                   <div className="absolute top-2 right-2 bg-orange-600 text-white px-4 py-2 rounded-full font-bold text-lg">
-                    {boletin.año}
+                    {publicacion.año}
                   </div>
                 </div>
                 <div className="p-6">
-                  <h3 className="text-2xl font-bold text-gray-800 mb-2">{boletin.titulo}</h3>
-                  {boletin.descripcion && (
+                  <h3 className="text-2xl font-bold text-gray-800 mb-2">{publicacion.titulo}</h3>
+                  {publicacion.descripcion && (
                     <p className="text-gray-600 text-sm line-clamp-2">{boletin.descripcion}</p>
                   )}
                 </div>
@@ -90,4 +90,4 @@ function BoletinesAnuales() {
   )
 }
 
-export default BoletinesAnuales
+export default PublicacionesEspeciales
