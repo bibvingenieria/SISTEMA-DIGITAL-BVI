@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react'
 import { supabase } from '@/lib/supabase'
 
 function PublicacionesEspeciales() {
-  const [publcaciones, setPublicaciones] = useState([])
+  const [publicaciones, setPublicaciones] = useState([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
