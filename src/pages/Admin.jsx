@@ -586,6 +586,16 @@ function Admin() {
             >
               Fotogalería Semestrales
             </button>
+            <button
+              onClick={() => setActiveTab('publicaciones-especiales')}
+              className={`py-4 px-1 border-b-2 font-medium text-sm ${
+                activeTab === 'publicaciones-especiales'
+                  ? 'border-orange-500 text-orange-600'
+                  : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+              }`}
+            >
+              Publicaciones Especiales
+            </button>
           </nav>
         </div>
 
